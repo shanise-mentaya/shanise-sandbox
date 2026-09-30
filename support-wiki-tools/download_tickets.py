@@ -11,8 +11,10 @@ For every conversation it writes two files:
 It is resumable: conversations already in raw/ are skipped, so you can stop and
 re-run at any time. Nothing from a conversation is ever printed to the screen.
 
+The Intercom token is read from the INTERCOM_TOKEN environment variable, or
+else from a plain-text file (default ~/intercom-token.txt). See SETUP_MAC.md.
+
 Usage:
-  export INTERCOM_TOKEN=...            (read-only token; see SETUP_MAC.md)
   python3 download_tickets.py --limit 20      # small test run first
   python3 download_tickets.py                  # the full last 365 days
 """
@@ -58,6 +60,25 @@ def synced_location_reason(path: Path):
         if path == base or base in path.parents:
             return f"~/{name} may be synced to iCloud"
     return None
+
+
+def read_token_file(path_str):
+    path = Path(path_str).expanduser()
+    if not path.is_file():
+        return None
+    reason = synced_location_reason(path.resolve())
+    if reason:
+        sys.exit(f"Refusing to read the token from {path}: {reason}. "
+                 "Move it to your home folder, e.g. ~/intercom-token.txt.")
+    if path.stat().st_mode & 0o077:
+        os.chmod(path, 0o600)
+        print(f"Tightened permissions on {path} so only you can read it.")
+    text = path.read_text(encoding="utf-8-sig", errors="replace").strip()
+    if text.startswith("{\\rtf"):
+        sys.exit(f"{path} was saved as rich text. Reopen it in TextEdit, choose "
+                 "Format > Make Plain Text, and save it again.")
+    lines = text.splitlines()
+    return lines[0].strip() if lines else None
 
 
 def call(method, path, token, base, body=None, params=None):
@@ -176,12 +197,15 @@ def main():
     ap.add_argument("--out", default="~/support-wiki-data", help="output folder")
     ap.add_argument("--region", default=os.environ.get("INTERCOM_REGION", "us"),
                     choices=sorted(REGIONS))
+    ap.add_argument("--token-file", default="~/intercom-token.txt",
+                    help="plain-text file holding the token (used if INTERCOM_TOKEN is not set)")
     ap.add_argument("--yes", action="store_true", help="skip the confirmation prompt")
     args = ap.parse_args()
 
-    token = os.environ.get("INTERCOM_TOKEN")
+    token = os.environ.get("INTERCOM_TOKEN") or read_token_file(args.token_file)
     if not token:
-        sys.exit("INTERCOM_TOKEN is not set. See SETUP_MAC.md, step 4.")
+        sys.exit("No Intercom token found. Save it in a plain-text file at "
+                 f"{args.token_file} or set INTERCOM_TOKEN. See SETUP_MAC.md.")
     base = os.environ.get("INTERCOM_BASE_URL") or REGIONS[args.region]
 
     out = Path(args.out).expanduser().resolve()

@@ -1,43 +1,40 @@
-# Download Intercom tickets to your Mac
+# Download Intercom tickets to your Mac, using a local Claude Code session
 
-Goal: a year of tickets saved in a folder on your own computer, never in a cloud or remote session.
+Goal: a year of tickets saved in a folder on your own computer, never in a cloud or remote session. You won't type commands. A local Claude Code session runs the download script, and you approve each step.
 
 ## 1. Put the tools in a folder
-Make a folder called `support-wiki-tools` in your home folder (not Desktop or Documents) and put these three files in it: `download_tickets.py`, `SETUP_MAC.md`, `LOCAL_CLAUDE_INSTRUCTIONS.md`.
+In Finder, open your home folder (the one with your name). Make a folder called `support-wiki-tools` in it, not on Desktop or in Documents (those can sync to iCloud). Put these three files in it: `download_tickets.py`, `SETUP_MAC.md`, `LOCAL_CLAUDE_INSTRUCTIONS.md`.
 
-## 2. Open Terminal and check Python
-Open Terminal (Cmd+Space, type Terminal). Run:
+## 2. Check your Mac and install Claude Code
+- Make sure FileVault is on: System Settings > Privacy & Security > FileVault.
+- Install the Claude Code desktop app if you haven't. Make sure it can reach Notion so it can read the Playbook doc.
 
-    python3 --version
+## 3. Get the Intercom token and save it in a file
+1. In Intercom: Developer Hub > your app > Authentication. Under permissions, turn on **Read conversations** only. Turn off everything that writes, and leave contacts and companies off. Save.
+2. Click **Regenerate** next to the access token so the new token carries the saved permissions. Copy it.
+3. Put the token in your password manager.
+4. Open **TextEdit** (Cmd+Space, type TextEdit). Choose **Format > Make Plain Text** (Shift+Cmd+T). Paste the token and nothing else.
+5. Choose **File > Save**. Name it `intercom-token.txt`. In the save window, pick the folder with your name in the sidebar (your home folder), not iCloud, Desktop or Documents. Close TextEdit.
 
-If macOS offers to install "Command Line Tools", accept and wait for it to finish, then run it again. Any version 3.8 or newer works. Nothing else needs installing.
+The script tightens this file so only you can read it, and it never prints the token.
 
-## 3. Pick the data folder
-The script saves to `~/support-wiki-data` by default. It refuses Desktop, Documents, iCloud Drive, Dropbox, OneDrive and Google Drive, because those sync to the cloud. Also make sure FileVault is on: System Settings > Privacy & Security > FileVault.
+## 4. Start a local Claude Code session
+Open the Claude Code desktop app. Start a **local** session with `support-wiki-tools` as the working folder, not a web or cloud session. Use a permission mode that asks before it acts. Ask it to run `pwd` and `hostname`: a path starting `/Users/` means local.
 
-## 4. Get the Intercom token
-In Intercom: Developer Hub > your app > Authentication. Under permissions, turn on **Read conversations** only. Turn off everything that writes, and leave contacts and companies off. Save the permissions, then click **Regenerate** next to the access token so the new token carries the saved settings (Intercom shows a warning about "outdated permissions" until you do). Copy the new token into your password manager. When you are done with the project, revoke it.
+## 5. Paste the message
+Open `LOCAL_CLAUDE_INSTRUCTIONS.md` and paste its whole contents as your first message. Claude will read the Playbook and your doc, play back what we're building, then walk you through the download.
 
-Paste it into Terminal so it never appears in a chat, a file, or your command history:
+## 6. During the download, you approve each command
+- **Test run first.** Claude runs the script for 20 tickets after you confirm the save folder is `~/support-wiki-data` on your own Mac.
+- **Check the result.** In Finder, choose Go > Go to Folder and enter `~/support-wiki-data/slim`. Open a few files and check they read as customer and agent turns, in order.
+- **Full year.** When you say so, Claude runs the full download in the background. It takes a while, and you can close and re-run it: it skips tickets it already saved.
+- **Never allow Claude to open `intercom-token.txt`.** If a permission prompt asks to read it, choose deny, and tell Claude not to.
 
-    read -s "INTERCOM_TOKEN?Paste token, then press Return: "
-    export INTERCOM_TOKEN
+## 7. When the download finishes
+Claude reads `manifest.json` and reports the counts. If `possibly_truncated` is above 0, ask Claude what it means.
 
-(Nothing shows as you paste. That is normal.) If your Intercom workspace is in the EU or Australia, also run `export INTERCOM_REGION=eu` or `au`.
+## 8. When you're done with the project
+Delete `intercom-token.txt`, revoke the token in the Developer Hub, and delete `~/support-wiki-data` once the project no longer needs it. Don't copy the data anywhere else or attach it to email, Slack, Notion or Drive.
 
-## 5. Test with 20 tickets
-    cd ~/support-wiki-tools
-    python3 download_tickets.py --limit 20
-
-It prints this computer's name and the save folder and asks you to confirm. Then open `~/support-wiki-data/slim` in Finder and read a few files. Check they look right: customer and agent turns in order, readable text, tags present.
-
-## 6. Run the full year
-    python3 download_tickets.py
-
-It can be stopped with Ctrl+C and re-run; it skips tickets it already saved. Expect it to take a while (about 9,000 tickets, one request each). When it finishes, `~/support-wiki-data/manifest.json` shows the counts. If "possibly_truncated" is above 0, tell Claude.
-
-## 7. Start a local Claude Code session
-Install Claude Code on your Mac (the desktop app or the terminal version from claude.com/claude-code) and open a **local** session in `~/support-wiki-tools`, not a web or cloud session. Verify by asking it to run `pwd` and `hostname`: a path starting `/Users/<you>/` means local. Paste the contents of `LOCAL_CLAUDE_INSTRUCTIONS.md` as your first message. Start in a restrictive permission mode so it asks before reading files or running commands.
-
-## 8. When you're done
-Keep `~/support-wiki-data` only as long as the project needs it, then delete it. Don't copy it anywhere else, and don't attach it to email, Slack, Notion or Drive.
+## If you ever prefer Terminal
+Skip the token file: run `read -s "INTERCOM_TOKEN?Paste token, then press Return: "` then `export INTERCOM_TOKEN`, and run `python3 ~/support-wiki-tools/download_tickets.py --limit 20` from Terminal.
