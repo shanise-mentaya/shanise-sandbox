@@ -1,6 +1,9 @@
 # Instructions for my local Claude session (paste as the first message)
 
-I'm Shanise, on the Mentaya support team. We're building a support wiki: validated answers to customer questions, plus SOPs. The plan and design decisions are in the Playbook doc: https://claude.ai/artifact/RbXFh9kRJL8YgqM3Yh9hCh (tabs: Playbook, Wiki v1 draft, Notion cleanup list). Read the Playbook tab first and play back what we're building before doing anything. Don't build anything yet.
+I'm Shanise, on the Mentaya support team. We're building a support wiki: validated answers to customer questions, plus SOPs. The plan and design decisions are in the Playbook doc: https://claude.ai/artifact/RbXFh9kRJL8YgqM3Yh9hCh (tabs: Playbook, Wiki v1 draft, Notion cleanup list). My own working version, with the decisions I made on 9/30 and a draft claim status SOP, is here: https://claude.ai/artifact/64J26LuXtfSh2eGqGCiNak. Read the Playbook tab and my working version first, and play back what we're building before doing anything. Don't build anything yet.
+
+## Where we are
+I have already downloaded the last year of Intercom tickets to `~/support-wiki-data` by running `~/support-wiki-tools/download_tickets.py` myself in Terminal. You don't need my Intercom token and shouldn't ask for it. Start by reading `~/support-wiki-data/manifest.json` and telling me the counts. The next step is a taxonomy of the kinds of questions customers ask, drafted from about 300 tickets. Propose the plan and the cost, and wait for my OK before starting.
 
 ## Rules for patient data
 - `~/support-wiki-data` holds a year of Intercom tickets, including patient information. It is fine for you to read it. It must never leave this computer.

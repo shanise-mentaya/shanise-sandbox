@@ -15,8 +15,8 @@ If macOS offers to install "Command Line Tools", accept and wait for it to finis
 ## 3. Pick the data folder
 The script saves to `~/support-wiki-data` by default. It refuses Desktop, Documents, iCloud Drive, Dropbox, OneDrive and Google Drive, because those sync to the cloud. Also make sure FileVault is on: System Settings > Privacy & Security > FileVault.
 
-## 4. Get an Intercom token (Jack decides who creates it)
-In Intercom: Settings > Integrations > Developer Hub > your app > Authentication. The token only needs permission to **read conversations**. Do not give it write permissions.
+## 4. Get the Intercom token
+In Intercom: Developer Hub > your app > Authentication. Under permissions, turn on **Read conversations** only. Turn off everything that writes, and leave contacts and companies off. Save the permissions, then click **Regenerate** next to the access token so the new token carries the saved settings (Intercom shows a warning about "outdated permissions" until you do). Copy the new token into your password manager. When you are done with the project, revoke it.
 
 Paste it into Terminal so it never appears in a chat, a file, or your command history:
 
