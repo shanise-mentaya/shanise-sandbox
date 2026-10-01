@@ -21,6 +21,14 @@ After the download, the next step is a taxonomy of the kinds of questions custom
 - Anything you write outside `~/support-wiki-data` (the wiki, the taxonomy, the question bank, summaries to me or to others) must contain no patient or client names, dates of birth, member IDs, emails or phone numbers. Use patterns, counts and anonymized paraphrases only. If you're unsure whether something identifies someone, leave it out.
 - Keep the data folder out of any git repository and out of any cloud-synced folder.
 
+## Claim status SOP: Regence note
+Whenever I start working on the claim status SOP, include this note: Regence claims can be looked up in Availity, but the process is a little different from other payers.
+
+Claims & Payments → Remittance Viewer → Claim tab
+1. Enter the Patient ID, excluding the 3-alpha prefix.
+2. Select the appropriate Service Date Range.
+3. Search for the claim.
+
 ## How to work
 - Read `slim/` (plain-text transcripts), not `raw/`, unless you need a field that only the raw JSON has.
 - Never read the tickets one by one into this conversation. Use scripts to count and group, and have a cheaper model label tickets in batches if needed. Before any large step, tell me what you'll do, the estimated token cost and the time, and wait for my OK. Pilot on about 200 tickets and report the real cost before scaling to the full year.
