@@ -48,10 +48,14 @@ This is a snapshot, not a source of truth. The support wiki working version hold
 ## Existing SOPs (wiki tab 2)
 SOP 1 daily inbox triage, SOP 2 opening an Account Health Check, SOP 3 medical-records request, SOP 4 refunds and voids, SOP 5 manual eligibility check (billing's SOP, kept for reference), SOP 6 claim status check. Jack's partnership inquiry SOP lives outside the wiki.
 
+Private Notion drafts, not yet in the wiki:
+- Claim status check SOP: https://app.notion.com/p/3eced73d7cc981bb9f66df14995e03bc
+- Support escalation SOP (customer conversations handed from Jose or Veronica to Shanise; Tier 1 hard triggers, Tier 2 soft triggers; Intercom tags `Escalation - Active` and `Escalation - Watch`): https://app.notion.com/p/3eded73d7cc981958e35c19f5a929494. Its source is the Escalation process page in the Jack / Shanise 1:1 projects.
+
 ## SOP backlog: escalation-related, in suggested order
 1. Bug escalation to engineering (no source yet)
 2. Urgent or on-call escalation (partial)
-3. At-risk or angry provider (partial)
+3. At-risk or angry provider (partly covered by the support escalation SOP)
 4. Payer-level escalation, such as Premera and Anthem (partial)
 5. Leadership exception approval (partial)
 6. Recurring-issue flagging (one line in the principles)
