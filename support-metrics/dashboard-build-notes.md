@@ -11,14 +11,14 @@ These notes name individuals and cover build decisions. Individual figures live 
 ## Decisions made (2026-10-07)
 - Fin-only and Fin-resolved tickets are excluded. Fin-escalated tickets answered by a human count.
 - Business hours: Mon-Fri 9:00-18:00 America/New_York (DST-aware), 9 holidays (see wiki definitions). SLA of "1 business day" means 9 business hours.
-- Closed tickets are credited to the assignee; unassigned counts toward team only.
+- Closed tickets are credited to the assignee. If unassigned, they are credited to whoever closed them, unless the ticket is spam, an out-of-office or other automated reply.
 - Reopen rate uses Intercom's raw reopen count.
 - Open tickets include unassigned and teammates other than Jose and Veronica.
 
 ## Build-time checks still open
 1. Confirm Intercom's "first teammate reply" stat never counts a Fin reply. Check against real tickets before trusting first-response numbers.
-2. Holidays that fall on a weekend: default is the federal observance (Saturday observed Friday, Sunday observed Monday). Confirm with Shanise.
-3. Some closed tickets have no assignee but were closed by Jose. Under the approved rule these count toward team only, so Jose's weekly closed count will read lower than his closes.
+2. Holidays that fall on a weekend use the federal observance (Saturday observed Friday, Sunday observed Monday). Confirmed.
+3. Spam and automated-reply detection. Intercom has no reliable field for it, so we need a rule (for example a spam tag, "automatic reply" or "out of office" subjects, no-reply senders). Draft it from real examples and have Shanise approve it. Unassigned tickets closed by a teammate without any reply are credited to the closer unless this rule flags them.
 4. The 9/18 baselines are probably plain clock time and cover Jose and Veronica only. Re-run them on these definitions before comparing to goals.
 5. Open tickets history cannot be rebuilt from Intercom, so the trend starts when daily snapshots begin.
 6. Confirm whether "unassigned" includes tickets with no team at all, not just no teammate.
